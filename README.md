@@ -1,4 +1,5 @@
 [![Circle CI](https://circleci.com/gh/datoma/docker-bind.svg?style=shield)](https://circleci.com/gh/datoma/docker-bind)
+[![Docker Image CI](https://github.com/datoma/docker-bind/actions/workflows/docker-image.yml/badge.svg)](https://github.com/datoma/docker-bind/actions/workflows/docker-image.yml)
 
 # datoma/bind:9.16.1-20200524
 
