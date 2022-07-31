@@ -160,6 +160,15 @@ jobs:
     executor: docker/machine
     steps:
       - checkout
+      - docker-build:
+           registry: docker.io
+           image: datoma/bind
+           tag: ${CIRCLE_TAG:-latest}
+           cache_from: docker.io/datoma/bind:latest
+       - docker-save:
+           registry: docker.io
+           image: datoma/bind
+           tag: ${CIRCLE_TAG:-latest}
 
   test:
     executor: docker/machine
