@@ -9,9 +9,6 @@ commands:
   docker-build:
     description: |
       Build and optionally deploy a Docker images
-    auth:
-        username: $DOCKER_USER
-        password: $DOCKERHUB_ACCESS_TOKEN
     parameters:
       dockerfile:
         default: Dockerfile
@@ -163,42 +160,6 @@ commands:
           command: >
             docker load -i ~/docker/docker-images.tar
 
-  docker-publish:
-    description: |
-      Build and optionally deploy a Docker images
-    parameters:
-      pr:
-        default: ''
-        type: string
-      registry:
-        default: docker.io
-        description: |
-          Comma separated list of registry to use, defaults to docker.io
-        type: string
-      image:
-        description: Name of image to build
-        type: string
-      tag:
-        default: $CIRCLE_SHA1
-        description: 'Image tag, defaults to the value of $CIRCLE_SHA1'
-        type: string
-    steps:
-      - unless:
-          condition: <<parameters.pr>>
-          steps:
-            - run:
-                name: Publish image for <<parameters.registry>>
-                command: >
-                  IFS="," read -ra DOCKER_REGISTRIES \<<< "<< parameters.registry >>"
-
-                  for registry in "${DOCKER_REGISTRIES[@]}"; do
-                    IFS="," read -ra DOCKER_TAGS \<<< "<< parameters.tag >>"
-
-                    for tag in "${DOCKER_TAGS[@]}"; do
-                      docker push $registry/<< parameters.image>>:${tag}
-                    done
-                  done
-
 jobs:
   build:
     executor: docker/machine
@@ -235,19 +196,6 @@ jobs:
           name: Test image
           command: |
               docker run --rm --net testnet datoma/bind:${CIRCLE_TAG:-latest} host www.google.com bind
-
-  publish-dockerhub:
-    executor: docker/machine
-    steps:
-      - docker-load
-      - docker/check:
-          registry: docker.io
-          docker-username: DOCKER_LOGIN
-          docker-password: DOCKER_PASSWORD
-      - docker-publish:
-          registry: docker.io
-          image: datoma/bind
-          tag: ${CIRCLE_TAG:-latest}
 
   release:
     executor:
@@ -287,21 +235,4 @@ workflows:
           filters:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/
-      - publish-dockerhub:
-          context: dockerhub
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/
-      - release:
-          context: github
-          requires:
-            - publish-dockerhub
-          filters:
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/
-            branches:
-              ignore: /.*/
+      
