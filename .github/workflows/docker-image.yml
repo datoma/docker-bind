@@ -3,8 +3,9 @@ name: Docker Image CI
 on:
   push:
     branches:
-      - "master"
+      - "main"
       - "feature-*"
+      - "update"
     tags:
       - "v*"
     paths:
