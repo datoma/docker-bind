@@ -20,11 +20,6 @@ commands:
           Extra flags to pass to docker build. For examples, see
           https://docs.docker.com/engine/reference/commandline/build
         type: string
-      registry:
-        default: docker.io
-        description: |
-          Comma separated list of registry to use, defaults to docker.io
-        type: string
       image:
         description: Name of image to build
         type: string
@@ -165,15 +160,6 @@ jobs:
     executor: docker/machine
     steps:
       - checkout
-      - docker-build:
-          registry: docker.io
-          image: datoma/bind
-          tag: ${CIRCLE_TAG:-latest}
-          cache_from: docker.io/datoma/bind:latest
-      - docker-save:
-          registry: docker.io
-          image: datoma/bind
-          tag: ${CIRCLE_TAG:-latest}
 
   test:
     executor: docker/machine
