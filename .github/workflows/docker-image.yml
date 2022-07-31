@@ -72,7 +72,5 @@ jobs:
             linux/arm64
           build-args: |
             BIND_USER=bind
-            BIND_VERSION=9.16.27
-            WEBMIN_VERSION=1.997
             DATA_DIR=/data
 
