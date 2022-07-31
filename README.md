@@ -1,6 +1,6 @@
 [![Docker Image CI](https://github.com/datoma/docker-bind/actions/workflows/docker-image.yml/badge.svg)](https://github.com/datoma/docker-bind/actions/workflows/docker-image.yml)
 
-# datoma/bind:9.16.1-20200524
+# datoma/bind:9.16.27-20220731
 
 - [Introduction](#introduction)
   - [Contributing](#contributing)
