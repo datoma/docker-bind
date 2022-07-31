@@ -10,6 +10,11 @@ on:
       - "v*"
     paths:
       - "Dockerfile"
+      - "docker-compose.yml"
+      - "entrypoint.sh"
+      - "README.md"
+      - ".github/workflows/docker-image.yml"
+      - ".circleci/config.yml"
 
 jobs:
   docker:
