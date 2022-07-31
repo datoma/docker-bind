@@ -47,7 +47,7 @@ If the above recommendations do not help then [report your issue](../../issues/n
 Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/datoma/bind) and is the recommended method of installation.
 
 ```bash
-docker pull datoma/bind:9.16.1-20200524
+docker pull datoma/bind:9.16.27-20220731
 ```
 
 Alternatively you can build the image yourself.
@@ -64,7 +64,7 @@ Start BIND using:
 docker run --name bind -d --restart=always \
   --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
-  datoma/bind:9.16.1-20200524
+  datoma/bind:9.16.27-20220731
 ```
 
 *Alternatively, you can use the sample [docker-compose.yml](docker-compose.yml) file to start the container using [Docker Compose](https://docs.docker.com/compose/)*
@@ -83,7 +83,7 @@ You can customize the launch command of BIND server by specifying arguments to `
 docker run --name bind -it --rm \
   --publish 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
   --volume /srv/docker/bind:/data \
-  datoma/bind:9.16.1-20200524 -h
+  datoma/bind:9.16.27-20220731 -h
 ```
 
 ## Persistence
@@ -122,7 +122,7 @@ To upgrade to newer releases:
   1. Download the updated Docker image:
 
   ```bash
-  docker pull datoma/bind:9.16.1-20200524
+  docker pull datoma/bind:9.16.27-20220731
   ```
 
   2. Stop the currently running image:
@@ -142,7 +142,7 @@ To upgrade to newer releases:
   ```bash
   docker run -name bind -d \
     [OPTIONS] \
-    datoma/bind:9.16.1-20200524
+    datoma/bind:9.16.27-20220731
   ```
 
 ## Shell Access
